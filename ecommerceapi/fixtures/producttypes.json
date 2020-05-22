@@ -1,0 +1,11 @@
+[
+    {
+        "model": "ecommerceapi.product_type",
+        "pk": 1,
+        "fields": {
+            "name": "Medical Supplies"
+        }
+    }
+
+
+]
