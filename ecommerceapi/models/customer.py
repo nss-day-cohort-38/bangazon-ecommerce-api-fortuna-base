@@ -24,4 +24,4 @@ def create_Customer(sender, instance, created, **kwargs):
 # object will be saved.
 @receiver(post_save, sender=User)
 def save_Customer(sender, instance, **kwargs):
-    instance.Customer.save()
+    instance.customer.save()
