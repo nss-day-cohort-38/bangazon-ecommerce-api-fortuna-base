@@ -26,7 +26,7 @@ class Product_Types(ViewSet):
         new_product_type.name = request.data["name"]
         new_product_type.save()
 
-        Product_Type_Serializer(new_product_type, context={'request': request})
+        serializer = Product_Type_Serializer(new_product_type, context={'request': request})
 
         return Response(serializer.data)
 
