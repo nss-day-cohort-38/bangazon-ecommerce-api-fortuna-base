@@ -24,6 +24,8 @@ class Products(ViewSet):
         new_product.description = request.data['description']
         new_product.quantity = request.data['quantity']
         new_product.customer = request.auth.user.customer
+        new_product.location = request.data['location']
+        new_product.image_path = request.data['image_path']
         new_product.product_type_id = request.data['product_type_id']
         new_product.save()
 
