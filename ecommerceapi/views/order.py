@@ -14,7 +14,8 @@ class OrderSerializer(serializers.HyperlinkedModelSerializer):
             view_name = 'order',
             lookup_field = 'id'
         )
-        fields = ('id', 'created_at', 'customer_id', 'payment_type')
+        fields = ('id', 'created_at', 'customer_id', 'payment_type_id',)
+        depth = 1
 
 class Orders(ViewSet):
 
@@ -22,7 +23,7 @@ class Orders(ViewSet):
         new_order = Order()
         new_order.created_at = request.data['created_at']
         new_order.customer_id = request.data['customer_id']
-        new_order.payment_type = request.data['payment_type']
+        new_order.payment_type_id = request.data['payment_type_id']
         new_order.save()
 
         serializer = OrderSerializer(new_order, context = {'request': request})
@@ -41,7 +42,7 @@ class Orders(ViewSet):
         order = Order.object.get(pk=pk)
         order.created_at = request.data['created_at']
         order.customer_id = request.data['customer_id']
-        order.payment_type = request.data['payment_type']
+        order.payment_type_id = request.data['payment_type_id']
         order.save()
 
         return Response({}, status=status.HTTP_204_NO_CONTENT)
