@@ -59,11 +59,11 @@ class Orders(ViewSet):
 
     def list(self, request):
         orders = Order.objects.all()
-        # forgein key goes here
-        paymentType = self.request.query_params.get('paymentType', None)
+        
+        payment_type = self.request.query_params.get('payment_type', None)
         customer = self.request.query_params.get('customer', None)
-        if paymentType is not None:
-            orders = orders.filter(paymentType__id=paymentType)
+        if payment_type is not None:
+            orders = orders.filter(payment_type__id=payment_type)
         if customer is not None:
             orders = orders.filter(customer__id=customer)
 
