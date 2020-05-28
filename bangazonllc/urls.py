@@ -19,9 +19,11 @@ from rest_framework import routers
 from ecommerceapi.views import register_user, login_user
 from rest_framework.authtoken.views import obtain_auth_token
 from ecommerceapi.views import Products
+from ecommerceapi.views import Orders
 
 router = routers.DefaultRouter(trailing_slash=False)
 router.register(r'products', Products, 'product')
+router.register(r'orders', Orders, 'order')
 
 urlpatterns = [
     path('admin/', admin.site.urls),
