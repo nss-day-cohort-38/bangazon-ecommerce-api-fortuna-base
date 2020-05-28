@@ -18,10 +18,17 @@ from django.urls import path, include
 from rest_framework import routers
 from ecommerceapi.views import register_user, login_user
 from rest_framework.authtoken.views import obtain_auth_token
+from ecommerceapi.views import *
 from ecommerceapi.views import Products
+
+
+
+
 
 router = routers.DefaultRouter(trailing_slash=False)
 router.register(r'products', Products, 'product')
+router.register(r'payment_types', PaymentTypes, 'payment_types')
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
