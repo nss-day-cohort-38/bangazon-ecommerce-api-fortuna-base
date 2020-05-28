@@ -31,13 +31,6 @@ class PaymentTypes(ViewSet):
             Response -- JSON serialized Payment_Type instance
         """
         pass
-        # try:
-        #     attraction = Attraction.objects.get(pk=pk)
-        #     serializer = AttractionSerializer(
-        #         attraction, context={'request': request})
-        #     return Response(serializer.data)
-        # except Exception as ex:
-        #     return HttpResponseServerError(ex)
 
     def list(self, request):
         """Handle GET requests to Payment Types
@@ -47,7 +40,6 @@ class PaymentTypes(ViewSet):
 
         payment_type = Payment_Type.objects.all()
 
-        # If customer is provided as a query parameter, then filter list of payment types by customer id
         customer = None
         if hasattr(request.auth, "user"):
             customer = Customer.objects.get(user=request.auth.user)
@@ -84,13 +76,6 @@ class PaymentTypes(ViewSet):
             Response -- Empty body with 204 status code
         """
         pass
-        # attraction = Attraction.objects.get(pk=pk)
-        # area = ParkArea.objects.get(pk=request.data["area_id"])
-        # attraction.name = request.data["name"]
-        # attraction.area = area
-        # attraction.save()
-
-        # return Response({}, status=status.HTTP_204_NO_CONTENT)
 
     def destroy(self, request, pk=None):
         """Handle DELETE requests for a single payment type
