@@ -26,6 +26,7 @@ from ecommerceapi.views import Products
 
 
 router = routers.DefaultRouter(trailing_slash=False)
+router.register(r'product_type', Product_Types, 'product_types' )
 router.register(r'products', Products, 'product')
 router.register(r'payment_types', PaymentTypes, 'payment_types')
 
