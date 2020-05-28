@@ -18,12 +18,8 @@ from django.urls import path, include
 from rest_framework import routers
 from ecommerceapi.views import register_user, login_user
 from rest_framework.authtoken.views import obtain_auth_token
-<<<<<<< HEAD
-from ecommerceapi.views import Product_Types, Products
-=======
 from ecommerceapi.views import *
 from ecommerceapi.views import Products
->>>>>>> 8df65c7e2bb542223b6e08e72b2f6962b89887b8
 
 
 
