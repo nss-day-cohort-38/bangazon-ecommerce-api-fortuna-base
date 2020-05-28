@@ -62,6 +62,11 @@ class Products(ViewSet):
 
     def list(self, request):
         products = Product.objects.all()
+
+        location = self.request.query_params.get('location', None)
+        if location is not None:
+            products = products.filter(location__id=location)
+
         serializer = ProductSerializer(
             products, many=True, context={'request': request}
         )
