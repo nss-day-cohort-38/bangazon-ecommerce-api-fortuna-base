@@ -71,6 +71,7 @@ class PaymentTypes(ViewSet):
         new_payment_type.expiration_date = request.data["expiration_date"]
         new_payment_type.customer = Customer.objects.get(user__id=request.user.id)
         new_payment_type.created_at = datetime.now(tz=timezone.utc)
+        new_payment_type.save()
 
         serializer = PaymentTypeSerializer(
             new_payment_type, context={'request': request})
