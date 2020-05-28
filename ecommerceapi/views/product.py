@@ -13,8 +13,8 @@ class ProductSerializer(serializers.HyperlinkedModelSerializer):
             view_name = 'product',
             lookup_field = 'id'
         )
-        fields = ('id', 'url', 'title', 'price', 'description', 'quantity')
-
+        fields = ('id', 'url', 'title', 'price', 'description', 'quantity','location', 'image_path', 'product_type_id')
+        depth = 1
 class Products(ViewSet):
 
     def create(self, request):
@@ -45,6 +45,9 @@ class Products(ViewSet):
         product = Product.object.get(pk=pk)
         product.title = request.data['title']
         product.price = request.data['price']
+        product.location = request.data['location']
+        product.image_path = request.data['image_path']
+        product.product_type_id = request.data['product_type_id']
         product.description = request.data['description']
         product.quantity = request.data['quantity']
         product.save()
