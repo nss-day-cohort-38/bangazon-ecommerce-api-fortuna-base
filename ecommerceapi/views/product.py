@@ -13,7 +13,7 @@ class ProductSerializer(serializers.HyperlinkedModelSerializer):
             view_name = 'product',
             lookup_field = 'id'
         )
-        fields = ('id', 'url', 'title', 'price', 'description', 'quantity')
+        fields = ('id', 'url', 'title', 'price', 'description', 'quantity', 'location')
 
 class Products(ViewSet):
 
@@ -65,7 +65,7 @@ class Products(ViewSet):
 
         location = self.request.query_params.get('location', None)
         if location is not None:
-            products = products.filter(location__id=location)
+            products = Product.objects.filter(location__icontains=location)
 
         serializer = ProductSerializer(
             products, many=True, context={'request': request}
