@@ -75,3 +75,21 @@ class OrderProducts(ViewSet):
 
         except Exception as ex:
             return Response({'message': ex.args[0]}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+    def update(self, request, pk=None):
+        orderproduct = OrderProduct.objects.get(pk=pk)
+        orderproduct.order_id = request.data['order_id']
+        orderproduct.product_id = request.data['product_id']
+        orderproduct.rating = request.data['rating']
+        orderproduct.save()
+        
+        return Response({}, status=status.HTTP_204_NO_CONTENT)
+
+    def list(self, request):
+        
+        orderproducts = Order_Product.objects.all()
+      
+        serializer = OrderProductSerializer(
+            orderproducts, many=True, context={'request': request})
+        
+        return Response(serializer.data)
