@@ -77,7 +77,7 @@ class OrderProducts(ViewSet):
             return Response({'message': ex.args[0]}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
     def update(self, request, pk=None):
-        orderproduct = OrderProduct.objects.get(pk=pk)
+        orderproduct = Order_Product.objects.get(pk=pk)
         orderproduct.order_id = request.data['order_id']
         orderproduct.product_id = request.data['product_id']
         orderproduct.rating = request.data['rating']
