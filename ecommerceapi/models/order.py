@@ -1,6 +1,7 @@
 from django.db import models
 from .customer import Customer
 from .payment_type import Payment_Type
+from django.db.models import F
 
 
 
@@ -14,6 +15,7 @@ class Order(models.Model):
     class Meta:
         verbose_name = "order"
         verbose_name_plural = "orders"
+        ordering = (F('created_at').asc(nulls_first = True))
 
     def __str__(self):
         return self.created_at

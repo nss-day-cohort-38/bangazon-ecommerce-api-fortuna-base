@@ -30,7 +30,14 @@ class PaymentTypes(ViewSet):
         Returns:
             Response -- JSON serialized Payment_Type instance
         """
-        pass
+        try:
+            payment_type = Payment_Type.objects.get(pk=pk)
+            serializer = PaymentTypeSerializer(
+                payment_type, context={'request': request})
+            return Response(serializer.data)
+        except Exception as ex: 
+            return HttpResponseServerError(ex)
+
 
     def list(self, request):
         """Handle GET requests to Payment Types
@@ -71,18 +78,23 @@ class PaymentTypes(ViewSet):
         return Response(serializer.data)
 
     def update(self, request, pk=None):
-        """Handle PUT requests for payment types
-        Returns:
-            Response -- Empty body with 204 status code
-        """
-        pass
+        
+        payment_type = Payment_Type.objects.get(pk=pk)
+        payment_type.merchant_name = request.data["merchant_name"]
+        payment_type.account_number = request.data["account_number"]
+        payment_type.expiration_date = request.data["expiration_date"]
+        payment_type.created_at = request.data["created_at"]
+        payment_type.customer_id = request.data["customer_id"]
+
+        payment_type.save()
+
+        return Response({}, status=status.HTTP_204_NO_CONTENT)
 
     def destroy(self, request, pk=None):
         """Handle DELETE requests for a single payment type
         Returns:
             Response -- 200, 404, or 500 status code
         """
-        pass
         try:
             payment_type = Payment_Type.objects.get(pk=pk)
             payment_type.delete()
