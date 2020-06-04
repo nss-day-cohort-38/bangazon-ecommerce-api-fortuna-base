@@ -15,7 +15,7 @@ class Order(models.Model):
     class Meta:
         verbose_name = "order"
         verbose_name_plural = "orders"
-        ordering = (F('created_at').asc(nulls_first = True))
+        ordering = (F('created_at').asc(nulls_first = True),)
 
     def __str__(self):
         return self.created_at
