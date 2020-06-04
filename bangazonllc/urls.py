@@ -21,6 +21,8 @@ from rest_framework.authtoken.views import obtain_auth_token
 from ecommerceapi.views import *
 from ecommerceapi.views import Products
 from ecommerceapi.views import Orders
+from django.conf import settings
+from django.conf.urls.static import static
 
 
 
@@ -40,4 +42,4 @@ urlpatterns = [
     path('login/', login_user),
     path('api-token-auth/', obtain_auth_token),
     path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),
-]
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
