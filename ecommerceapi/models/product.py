@@ -10,9 +10,9 @@ class Product(models.Model):
     description = models.CharField(max_length=255)
     quantity = models.IntegerField(null=True)
     location = models.CharField(max_length=75)
-    image_path = models.ImageField(upload_to="products", null=True)
+    image_path = models.ImageField(upload_to="products", null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
-    product_type = models.ForeignKey(Product_Type, on_delete=models.CASCADE)
+    product_type = models.ForeignKey(Product_Type, related_name="products", on_delete=models.CASCADE)
     orders = models.ManyToManyField('Order', through='Order_Product',)
 
     class Meta:
