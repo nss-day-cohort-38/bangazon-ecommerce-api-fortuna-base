@@ -4,6 +4,7 @@ from rest_framework.response import Response
 from rest_framework import serializers
 from rest_framework import status
 from ecommerceapi.models import Product
+from rest_framework.parsers import MultiPartParser, FormParser, JSONParser
 
 class ProductSerializer(serializers.HyperlinkedModelSerializer):
 
@@ -17,6 +18,8 @@ class ProductSerializer(serializers.HyperlinkedModelSerializer):
         depth = 1
 class Products(ViewSet):
 
+    parser_classes = (MultiPartParser, FormParser, JSONParser, )
+
     def create(self, request):
         new_product = Product()
         new_product.title = request.data['title']
@@ -24,11 +27,12 @@ class Products(ViewSet):
         new_product.description = request.data['description']
         new_product.quantity = request.data['quantity']
         new_product.customer = request.auth.user.customer
-        new_product.location = request.data['location']
         new_product.image_path = request.data['image_path']
+        new_product.location = request.data['location']
         new_product.product_type_id = request.data['product_type_id']
         new_product.save()
 
+    
         serializer = ProductSerializer(new_product, context = {'request': request})
 
         return Response(serializer.data)
