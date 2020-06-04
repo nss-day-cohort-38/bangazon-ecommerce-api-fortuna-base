@@ -19,8 +19,7 @@ from rest_framework import routers
 from ecommerceapi.views import register_user, login_user
 from rest_framework.authtoken.views import obtain_auth_token
 from ecommerceapi.views import *
-from ecommerceapi.views import Products
-from ecommerceapi.views import Orders
+from ecommerceapi.views import Products, Customers
 from django.conf import settings
 from django.conf.urls.static import static
 
@@ -29,10 +28,11 @@ from django.conf.urls.static import static
 
 
 router = routers.DefaultRouter(trailing_slash=False)
-router.register(r'product_type', Product_Types, 'product_types' )
+router.register(r'product_type', Product_Types, 'product_type' )
 router.register(r'products', Products, 'product')
 router.register(r'orders', Orders, 'order')
 router.register(r'payment_types', PaymentTypes, 'payment_types')
+router.register(r'customers', Customers, 'customer')
 
 
 urlpatterns = [
