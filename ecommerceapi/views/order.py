@@ -5,9 +5,13 @@ from rest_framework import serializers
 from rest_framework import status
 from ecommerceapi.models import Order
 from ecommerceapi.models import Order_Product
+<<<<<<< HEAD
 
 class OrderSerializer(serializers.HyperlinkedModelSerializer):
 
+=======
+class OrderSerializer(serializers.HyperlinkedModelSerializer):
+>>>>>>> a84e3cad2df50d0e50078cc2e07389c42e73ba9c
     class Meta:
         model = Order
         url = serializers.HyperlinkedIdentityField(
@@ -25,11 +29,9 @@ class Orders(ViewSet):
         new_order.customer_id = request.data['customer_id']
         new_order.payment_type_id = request.data['payment_type_id']
         new_order.save()
-
         serializer = OrderSerializer(new_order, context = {'request': request})
-
         return Response(serializer.data)
-    
+        
     def retrieve(self, request, pk=None):
         try:
             order = Order.objects.get(pk=pk)
@@ -46,6 +48,7 @@ class Orders(ViewSet):
         order.save()
 
         return Response({}, status=status.HTTP_204_NO_CONTENT)
+        
 
     def partial_update(self, request, pk=None, partial=True):
         order = Order.objects.get(pk=pk)
@@ -61,23 +64,18 @@ class Orders(ViewSet):
         try:
             order = Order.objects.get(pk=pk)
             order.delete()
-
             return Response({}, status=status.HTTP_204_NO_CONTENT)
         except Order.DoesNotExist as ex:
             return Response({'message': ex.args[0]}, status=status.HTTP_404_NOT_FOUND)
         except Exception as ex:
             return Response({'message': ex.args[0]}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
-
     def list(self, request):
         orders = Order.objects.all()
-        
         payment_type = self.request.query_params.get('payment_type', None)
         customer = self.request.query_params.get('customer', None)
         if payment_type is not None:
             orders = orders.filter(payment_type__id=payment_type)
         if customer is not None:
             orders = orders.filter(customer__id=customer)
-
         serializer = OrderSerializer(orders, many=True, context={'request': request})
-
         return Response(serializer.data)
