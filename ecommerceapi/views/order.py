@@ -14,7 +14,7 @@ class OrderSerializer(serializers.HyperlinkedModelSerializer):
             view_name = 'order',
             lookup_field = 'id'
         )
-        fields = ('id', 'created_at', 'customer_id', 'payment_type_id',)
+        fields = ('id', 'created_at', 'customer_id', 'payment_type_id', 'products')
         depth = 1
 
 class Orders(ViewSet):
@@ -39,7 +39,7 @@ class Orders(ViewSet):
             return HttpResponseServerError(ex)
 
     def update(self, request, pk=None):
-        order = Order.object.get(pk=pk)
+        order = Order.objects.get(pk=pk)
         order.created_at = request.data['created_at']
         order.customer_id = request.data['customer_id']
         order.payment_type_id = request.data['payment_type_id']
