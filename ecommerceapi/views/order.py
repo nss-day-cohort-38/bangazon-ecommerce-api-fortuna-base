@@ -47,6 +47,16 @@ class Orders(ViewSet):
 
         return Response({}, status=status.HTTP_204_NO_CONTENT)
 
+    def partial_update(self, request, pk=None, partial=True):
+        order = Order.objects.get(pk=pk)
+        serializer = OrderSerializer(order, context={'request': request}, partial=True)
+        order.created_at = request.data['created_at']
+        order.customer_id = request.data['customer_id']
+        order.payment_type_id = request.data['payment_type_id']
+        order.save()   
+    
+        return Response({}, status=status.HTTP_200_OK)
+
     def destroy(self, request, pk=None):
         try:
             order = Order.objects.get(pk=pk)
