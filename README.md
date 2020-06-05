@@ -2,7 +2,7 @@
 
 # Steps to get the Bangazon API started
 
-1. Create a directory in your termincal, and `cd` into that directory. From there you need to clone down this repo by using `git clone (ssh_key_here)`. 
+1. Create a directory in your terminal, and `cd` into that directory. From there you need to clone down this repo by using `git clone (ssh_key_here)`. 
 
 1. In your terminal, you need to enter into that directory you just cloned down using `cd bangazon-ecommerce-api-fortuna-base/`.
 
