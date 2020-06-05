@@ -3,21 +3,13 @@ from rest_framework.viewsets import ViewSet
 from rest_framework.response import Response
 from rest_framework import serializers
 from rest_framework import status
-from ecommerceapi.models import Product, Customer, Order, Payment_Type, Order_Product
-
-
-from django.http import HttpResponseServerError
-from rest_framework.viewsets import ViewSet
-from rest_framework.response import Response
-from rest_framework import serializers
-from rest_framework import status
 from ..models import Customer, Order, Order_Product, Payment_Type, Product
 
 class OrderProductSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Order_Product
         url = serializers.HyperlinkedIdentityField(
-            view_name='orderproduct',
+            view_name='order_products',
             lookup_field='id'
         )
         fields = ('id', 'order_id', 'product_id')
@@ -25,6 +17,7 @@ class OrderProductSerializer(serializers.HyperlinkedModelSerializer):
 class OrderProducts(ViewSet):
     
     def create(self, request):
+
         customer = Customer.objects.get(user_id=request.auth.user.id)
         
         try:
@@ -37,6 +30,7 @@ class OrderProducts(ViewSet):
             new_order_product.save()
 
             serialize = OrderProductSerializer(new_order_product, context={'request': request}) 
+
         except:
             new_order = Order()
             new_order.customer_id = customer.id
