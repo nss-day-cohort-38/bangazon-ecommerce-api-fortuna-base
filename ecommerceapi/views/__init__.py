@@ -4,3 +4,4 @@ from .payment_type import PaymentTypes
 from .product import Products
 from .order import Orders
 from .customer import Customers
+from .order import Orders
