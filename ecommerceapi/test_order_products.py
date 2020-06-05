@@ -17,7 +17,7 @@ class TestOrderProducts(TestCase):
             username=self.username, password=self.password)
         self.token = Token.objects.create(user=self.user)
         self.customer = Customer.objects.create(user_id=1, phone_number="615-123-4567", address="123 Street")
-        self.order = Order.objects.create(created_at="2020-06-03 18:48:48.621102", customer_id=1, payment_type_id=None)
+        self.order = Order.objects.create(created_at="2020-06-05 11:30:48.621102", customer_id=1, payment_type_id=None)
         self.product = Product.objects.create(title="test item", price=200, description="test description", quantity=1, location="test", image_path="test.png", created_at="2020-06-03 18:48:48.621102", customer_id=1, product_type_id=1)
         self.product_type = Product_Type.objects.create(name="test category")
     
