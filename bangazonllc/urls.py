@@ -24,12 +24,14 @@ from django.conf.urls.static import static
 
 
 
-
 router = routers.DefaultRouter(trailing_slash=False)
-router.register(r'product_type', Product_Types, 'product_types' )
+router.register(r'product_type', Product_Types, 'product_type' )
 router.register(r'products', Products, 'product')
 router.register(r'payment_types', PaymentTypes, 'payment_types')
 router.register(r'order_products', OrderProducts, 'order_products')
+router.register(r'orders', Orders, 'order')
+router.register(r'payment_types', PaymentTypes, 'payment_type')
+router.register(r'customers', Customers, 'customer')
 
 
 urlpatterns = [

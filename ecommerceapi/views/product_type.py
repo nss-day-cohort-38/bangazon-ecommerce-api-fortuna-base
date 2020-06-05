@@ -4,7 +4,8 @@ from rest_framework.viewsets import ViewSet
 from rest_framework.response import Response
 from rest_framework import serializers
 from rest_framework import status
-from ecommerceapi.models import Product_Type
+from ecommerceapi.models import Product_Type, Customer
+from ecommerceapi.models import Product
 
 
 class Product_Type_Serializer(serializers.HyperlinkedModelSerializer):
@@ -15,7 +16,9 @@ class Product_Type_Serializer(serializers.HyperlinkedModelSerializer):
             view_name='product_type',
             lookup_field='id'
         )
-        fields = ('id', 'name')
+        fields = ('id', 'url', 'name', 'products')
+        depth = 1
+        
 
 
 class Product_Types(ViewSet):
@@ -32,9 +35,9 @@ class Product_Types(ViewSet):
 
     def list(self, request):
 
-        product_types = Product_Type.objects.all()
+        product_type = Product_Type.objects.all()
         serializer = Product_Type_Serializer(
-            product_types, many=True, context={'request': request})
+            product_type, many=True, context={'request': request})
         return Response(serializer.data)
 
     def retrieve(self, request, pk=None):
