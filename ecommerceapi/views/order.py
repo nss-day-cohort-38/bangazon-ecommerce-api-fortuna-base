@@ -5,13 +5,9 @@ from rest_framework import serializers
 from rest_framework import status
 from ecommerceapi.models import Order
 from ecommerceapi.models import Order_Product
-<<<<<<< HEAD
 
 class OrderSerializer(serializers.HyperlinkedModelSerializer):
 
-=======
-class OrderSerializer(serializers.HyperlinkedModelSerializer):
->>>>>>> a84e3cad2df50d0e50078cc2e07389c42e73ba9c
     class Meta:
         model = Order
         url = serializers.HyperlinkedIdentityField(
