@@ -5,16 +5,20 @@ from rest_framework import serializers
 from rest_framework import status
 from ecommerceapi.models import Order
 from ecommerceapi.models import Order_Product
+
 class OrderSerializer(serializers.HyperlinkedModelSerializer):
+
     class Meta:
         model = Order
         url = serializers.HyperlinkedIdentityField(
             view_name = 'order',
             lookup_field = 'id'
         )
-        fields = ('id', 'created_at', 'customer_id', 'payment_type_id',)
+        fields = ('id', 'created_at', 'customer_id', 'payment_type_id', 'products')
         depth = 1
+
 class Orders(ViewSet):
+
     def create(self, request):
         new_order = Order()
         new_order.created_at = request.data['created_at']
@@ -23,6 +27,7 @@ class Orders(ViewSet):
         new_order.save()
         serializer = OrderSerializer(new_order, context = {'request': request})
         return Response(serializer.data)
+        
     def retrieve(self, request, pk=None):
         try:
             order = Order.objects.get(pk=pk)
@@ -30,13 +35,27 @@ class Orders(ViewSet):
             return Response(serializer.data)
         except Exception as ex:
             return HttpResponseServerError(ex)
+
     def update(self, request, pk=None):
-        order = Order.object.get(pk=pk)
+        order = Order.objects.get(pk=pk)
         order.created_at = request.data['created_at']
         order.customer_id = request.data['customer_id']
         order.payment_type_id = request.data['payment_type_id']
         order.save()
+
         return Response({}, status=status.HTTP_204_NO_CONTENT)
+        
+
+    def partial_update(self, request, pk=None, partial=True):
+        order = Order.objects.get(pk=pk)
+        serializer = OrderSerializer(order, context={'request': request}, partial=True)
+        order.created_at = request.data['created_at']
+        order.customer_id = request.data['customer_id']
+        order.payment_type_id = request.data['payment_type_id']
+        order.save()   
+    
+        return Response({}, status=status.HTTP_200_OK)
+
     def destroy(self, request, pk=None):
         try:
             order = Order.objects.get(pk=pk)

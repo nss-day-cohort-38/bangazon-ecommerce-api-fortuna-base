@@ -1,6 +1,7 @@
 from django.db import models
 from .customer import Customer
 from .payment_type import Payment_Type
+from django.db.models import F
 
 
 
@@ -12,6 +13,7 @@ class Order(models.Model):
     products = models.ManyToManyField("Product", through='Order_Product',)
 
     class Meta:
+        ordering = (F('created_at').desc(nulls_last = False),)
         verbose_name = "order"
         verbose_name_plural = "orders"
 
