@@ -16,10 +16,10 @@ class CustomerSerializer(serializers.HyperlinkedModelSerializer):
             view_name='customer',
             lookup_field='id'
         )
-        fields = ('id', 'url', 'address', 'phone_number')
+        fields = ('id', 'url', 'address', 'phone_number', 'user')
 
 
-class Customers(ViewSet):
+class Customers(ViewSet): 
     
     def list(self, request):
         """Handle GET requests to customers resource

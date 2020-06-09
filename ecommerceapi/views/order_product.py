@@ -12,8 +12,8 @@ class OrderProductSerializer(serializers.HyperlinkedModelSerializer):
             view_name='order_products',
             lookup_field='id'
         )
-        fields = ('id', 'order_id', 'product_id', 'order', 'product')
-        depth = 1
+        fields = ('id', 'order_id', 'product_id', 'order', 'product' )
+        depth = 2
         
 class OrderProducts(ViewSet):
     
