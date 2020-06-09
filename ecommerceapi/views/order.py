@@ -3,7 +3,7 @@ from rest_framework.viewsets import ViewSet
 from rest_framework.response import Response
 from rest_framework import serializers
 from rest_framework import status
-from ecommerceapi.models import Order
+from ecommerceapi.models import Order, Customer
 from ecommerceapi.models import Order_Product
 
 class OrderSerializer(serializers.HyperlinkedModelSerializer):
@@ -14,7 +14,7 @@ class OrderSerializer(serializers.HyperlinkedModelSerializer):
             view_name = 'order',
             lookup_field = 'id'
         )
-        fields = ('id', 'created_at', 'customer_id', 'payment_type_id', 'products')
+        fields = ('id', 'created_at', 'customer_id', 'payment_type_id', 'products', 'customer')
         depth = 1
 
 class Orders(ViewSet):
@@ -49,9 +49,7 @@ class Orders(ViewSet):
     def partial_update(self, request, pk=None, partial=True):
         order = Order.objects.get(pk=pk)
         serializer = OrderSerializer(order, context={'request': request}, partial=True)
-        order.created_at = request.data['created_at']
-        order.customer_id = request.data['customer_id']
-        order.payment_type_id = request.data['payment_type_id']
+        order.payment_type_id = request.data['payment_type']
         order.save()   
     
         return Response({}, status=status.HTTP_200_OK)
@@ -66,9 +64,10 @@ class Orders(ViewSet):
         except Exception as ex:
             return Response({'message': ex.args[0]}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
     def list(self, request):
-        orders = Order.objects.all()
+        customer = Customer.objects.get(user = request.auth.user)
+        orders = Order.objects.filter(customer = customer)
         payment_type = self.request.query_params.get('payment_type', None)
-        customer = self.request.query_params.get('customer', None)
+        # customer = self.request.query_params.get('customer', None)
         if payment_type is not None:
             orders = orders.filter(payment_type__id=payment_type)
         if customer is not None:

@@ -12,7 +12,8 @@ class OrderProductSerializer(serializers.HyperlinkedModelSerializer):
             view_name='order_products',
             lookup_field='id'
         )
-        fields = ('id', 'order_id', 'product_id')
+        fields = ('id', 'order_id', 'product_id', 'order', 'product' )
+        depth = 2
         
 class OrderProducts(ViewSet):
     
@@ -81,8 +82,8 @@ class OrderProducts(ViewSet):
 
     def list(self, request):
         
-        orderproducts = Order_Product.objects.all()
-      
+        customer = Customer.objects.get(user=request.auth.user)
+        orderproducts = Order_Product.objects.filter(order__customer = customer)
         serializer = OrderProductSerializer(
             orderproducts, many=True, context={'request': request})
         
